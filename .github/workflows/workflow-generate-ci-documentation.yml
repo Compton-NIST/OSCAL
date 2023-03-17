@@ -58,13 +58,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
       - name: Create Pull Request with Updates
-        uses: devops-infra/action-pull-request@v0.5.5
-        with:
-          github_token: ${{ secrets.COMMIT_TOKEN }}
-          source_branch: auto-ci-docs-update
-          target_branch: main
-          title: Update CI Documentation and Diagrams
-          body: "**Automated pull request**"
-          draft: true
-          allow_no_diff: true
-          get_diff: true
+        run: |
+          gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body 'Automated update from workflow-generate-ci-documentation workflow.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
