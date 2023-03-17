@@ -33,9 +33,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
-        uses: Compton-NIST/Inspector@v0.6
+        uses: Compton-NIST/Inspector@v0.7
         with:
           artifact_name: _docs
+          output_path: _docs
       - name: Commit Documentation Result (Documents and Diagrams)
         if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
