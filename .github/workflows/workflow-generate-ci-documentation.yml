@@ -1,9 +1,9 @@
 name: Generate CI Documentation
 on:
   # Remove before PR
-  push:
-    branches:
-      - "issue-*"
+  # push:
+  #   branches:
+  #     - "issue-*"
   # Remove before PR
   workflow_call:
     inputs:
@@ -38,6 +38,10 @@ jobs:
           artifact_name: _docs
           output_path: _docs
           file_prefix: OSCAL
+      - name: Make the workflow markdown file a README.md for the directory.
+        run: |
+          cp _docs/OSCAL.workflows.md _docs/README.md
+          rm -f _docs/OSCAL.workflows.md
       - name: Commit Documentation Result (Documents and Diagrams)
         if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
