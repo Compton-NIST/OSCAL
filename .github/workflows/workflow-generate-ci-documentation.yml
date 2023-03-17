@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
-        uses: Compton-NIST/Inspector@v0.12.2
+        uses: Compton-NIST/Inspector@v1
         with:
           artifact_name: _docs
           output_path: _docs
@@ -60,7 +60,7 @@ jobs:
         if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: devops-infra/action-pull-request@v0.5.5
         with:
-          # github_token: ${{ secrets.COMMIT_TOKEN }}
+          github_token: ${{ secrets.COMMIT_TOKEN }}
           source_branch: auto-ci-docs-update
           target_branch: main
           title: Update CI Documentation and Diagrams
