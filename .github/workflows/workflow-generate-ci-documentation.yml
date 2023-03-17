@@ -33,7 +33,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
-        uses: Compton-NIST/Inspector@v0.5
+        uses: Compton-NIST/Inspector@v0.6
+        with:
+          artifact_name: _docs
       - name: Commit Documentation Result (Documents and Diagrams)
         if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
@@ -47,7 +49,7 @@ jobs:
           commit_user_name: OSCAL GitHub Actions Bot
           commit_user_email: oscal@nist.gov
           commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
-          commit_message: Publishing updated CI documentation and diagrams [ci skip]
+          commit_message: Auto publishing updated CI documentation and diagrams.
       - name: Create Pull Request with Updates
         if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: devops-infra/action-pull-request@v0.5.5
