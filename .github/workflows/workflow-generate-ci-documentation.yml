@@ -66,4 +66,5 @@ jobs:
           title: Update CI Documentation and Diagrams
           body: "**Automated pull request**"
           draft: true
+          allow_no_diff: true
           get_diff: true
