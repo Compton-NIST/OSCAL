@@ -41,7 +41,8 @@ jobs:
           # repository: ${{ env.CHECKOUT_PATH }}
           create_branch: true
           branch: auto-ci-docs-update
-          file_pattern: md svg
+          file_pattern: '*.svg *.md'
+          disable_globbing: true
           skip_dirty_check: false
           commit_user_name: OSCAL GitHub Actions Bot
           commit_user_email: oscal@nist.gov
