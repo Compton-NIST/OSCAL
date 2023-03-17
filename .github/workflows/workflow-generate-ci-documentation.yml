@@ -61,8 +61,8 @@ jobs:
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.COMMIT_TOKEN }}
-          source_branch: origin/auto-ci-docs-update
-          target_branch: origin/main
+          source_branch: auto-ci-docs-update
+          target_branch: main
           title: Update CI Documentation and Diagrams
           body: "**Automated pull request**"
           draft: true
