@@ -56,8 +56,14 @@ jobs:
           commit_user_email: oscal@nist.gov
           commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
           commit_message: Auto publishing updated CI documentation and diagrams.
+  create_pr:
+    if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: auto-ci-docs-update
       - name: Create Pull Request with Updates
-        if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.COMMIT_TOKEN }}
