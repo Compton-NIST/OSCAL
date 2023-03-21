@@ -27,7 +27,7 @@ jobs:
       with:
         submodules: recursive
     - name: "***** Monitor Workflow Status *****"
-      uses: ./.github/actions/workflow-monitor
+      uses: ././branch/.github/actions/workflow-monitor
     # Setup runtime environment
     # -------------------------
     - name: Set up NodeJS
@@ -71,4 +71,4 @@ jobs:
           bug
           Scope: Documentation
     - name: "***** Monitor Workflow Status *****"
-      uses: ./.github/actions/workflow-monitor
+      uses: ././branch/.github/actions/workflow-monitor
