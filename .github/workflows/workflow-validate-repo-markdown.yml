@@ -26,8 +26,10 @@ jobs:
     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       with:
         submodules: recursive
+    - name: "Check action locations."
+      run: find ./ -name action.yaml
     - name: "***** Monitor Workflow Status *****"
-      uses: ././branch/.github/actions/workflow-monitor
+      uses: ./branch/.github/actions/workflow-monitor
     # Setup runtime environment
     # -------------------------
     - name: Set up NodeJS
@@ -70,7 +72,5 @@ jobs:
         labels: |
           bug
           Scope: Documentation
-    - name: "Check action locations."
-      run: find ./ -name action.yaml
     - name: "***** Monitor Workflow Status *****"
-      uses: ././branch/.github/actions/workflow-monitor
+      uses: ./branch/.github/actions/workflow-monitor
