@@ -78,8 +78,9 @@ jobs:
       run: |
         echo "SAXON_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
         echo "CALABASH_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
+        find ./ --name action.yaml
     - name: "***** Monitor Workflow Status *****"
-      uses: ../.github/actions/workflow-monitor
+      uses: ./.github/actions/workflow-monitor
     # Setup runtime environment
     # -------------------------
     # Java JDK 11
