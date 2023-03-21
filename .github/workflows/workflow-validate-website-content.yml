@@ -29,7 +29,7 @@ jobs:
     - name: "Check action locations."
       run: find ./ -name action.yaml
     - name: "***** Monitor Workflow Status *****"
-      uses: ././branch/.github/actions/workflow-monitor
+      uses: ./branch/.github/actions/workflow-monitor
     - name: Checkout git ref of published website content
       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       with:
@@ -53,4 +53,4 @@ jobs:
           Scope: Documentation
           Scope: Website          
     - name: "***** Monitor Workflow Status *****"
-      uses: ././branch/.github/actions/workflow-monitor
+      uses: ./branch/.github/actions/workflow-monitor
