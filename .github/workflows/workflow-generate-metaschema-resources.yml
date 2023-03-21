@@ -33,6 +33,8 @@ jobs:
       JAVA_CLASSPATH: ${{ github.workspace}}/lib
       NODE_ENV: production
     steps:
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     # use this for builds triggered from the UI on protected branches
     - name: Checkout Latest (using COMMIT_TOKEN)
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.commit_resources == 'true'
@@ -127,6 +129,8 @@ jobs:
         retention-days: 5
     # Store Built Artifacts
     # ---------------
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Publish Schemas and Converters
       # only do this on master
       if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
@@ -139,3 +143,5 @@ jobs:
         commit_user_email: oscal@nist.gov
         commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
         commit_message: Publishing generated metaschema resources [ci skip]
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor

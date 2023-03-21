@@ -35,6 +35,8 @@ jobs:
       BRANCH_PATH: ${{ github.workspace }}/branch
       MAIN_BRANCH_REF: main
     steps:
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     # This workflow requires two branches to be checked out
     # 1) The main branch where live web assets are managed. Generated reference pages need to be
     #    pushed here.
@@ -78,6 +80,8 @@ jobs:
       run: |
         echo "SAXON_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
         echo "CALABASH_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     # Setup runtime environment
     # -------------------------
     # Java JDK 11
@@ -150,6 +154,8 @@ jobs:
         path: |
           ${{ runner.temp }}/metaschema-website.zip
         retention-days: 5
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Publish Generated Pages
       # only do this on master
       if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
@@ -163,3 +169,5 @@ jobs:
         commit_user_email: oscal@nist.gov
         commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
         commit_message: Pushing generated website pages [ci skip]
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor

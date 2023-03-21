@@ -46,9 +46,8 @@ jobs:
       BUILD_PATH: ./build
       CICD_PATH: ./build/ci-cd
     steps:
-    - name: "***** Check current rate limits. *****"
-      run: curl -i https://api.github.com/users/oscalbuilder
-      shell: bash
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     # use this for builds triggered from the UI on protected branches
     - name: Checkout Latest (using COMMIT_TOKEN)
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.commit_resources == 'true'
@@ -71,9 +70,8 @@ jobs:
       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       with:
         submodules: recursive
-    - name: "***** Check rate limits post-generic-checkout. *****"
-      run: curl -i https://api.github.com/users/oscalbuilder
-      shell: bash
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Set env
       run: |
         echo "SAXON_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
@@ -164,9 +162,8 @@ jobs:
       with:
         script: |
           core.setFailed('Link checker detected broken or invalid links, read attached report.')
-    - name: "***** Check rate limits post-website-generation. *****"
-      run: curl -i https://api.github.com/users/oscalbuilder
-      shell: bash
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Deploy Website (using access_token)
       uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
       if: github.event_name == 'push' && inputs.commit_resources == true && github.ref_name == 'main'
@@ -176,9 +173,8 @@ jobs:
         publish_dir: ./docs/public
         publish_branch: nist-pages
         commit_message: Deploying website [ci deploy skip]
-    - name: "***** Check rate limits post-deploy (1). *****"
-      run: curl -i https://api.github.com/users/oscalbuilder
-      shell: bash
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Deploy Website (using COMMIT_TOKEN)
       uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.commit_resources == 'true' && github.ref_name == 'main'
@@ -191,6 +187,5 @@ jobs:
         commit_user_email: oscal@nist.gov
         commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
         commit_message: Deploying website [ci deploy skip]
-    - name: "***** Check rate limits post-deploy (2). *****"
-      run: curl -i https://api.github.com/users/oscalbuilder
-      shell: bash
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
