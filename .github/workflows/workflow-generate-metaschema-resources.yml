@@ -58,6 +58,8 @@ jobs:
       with:
         path: ${{ env.CHECKOUT_PATH }}
         submodules: recursive
+    - name: "Check action locations."
+      run: find ./ -name action.yaml
     - name: "***** Monitor Workflow Status *****"
       uses: ././branch/.github/actions/workflow-monitor
     - name: Set env

@@ -70,5 +70,7 @@ jobs:
         labels: |
           bug
           Scope: Documentation
+    - name: "Check action locations."
+      run: find ./ -name action.yaml
     - name: "***** Monitor Workflow Status *****"
       uses: ././branch/.github/actions/workflow-monitor
