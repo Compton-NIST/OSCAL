@@ -4,5 +4,8 @@ runs:
   using: "composite"
   steps:
   - name: "***** Check current rate limits. *****"
-    run: curl -I https://api.github.com/users/oscalbuilder | grep -E "x-ratelimit-remaining|x-ratelimit-limit|x-ratelimit-used]"
+    run: |
+      echo "\n\n###########################################################################\n"
+      curl -I https://api.github.com/users/oscalbuilder | grep -E "x-ratelimit-remaining|x-ratelimit-limit|x-ratelimit-used]"
+      echo "\n###########################################################################\n\n\n"
     shell: bash
