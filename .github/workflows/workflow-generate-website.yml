@@ -46,8 +46,6 @@ jobs:
       BUILD_PATH: ./build
       CICD_PATH: ./build/ci-cd
     steps:
-    - name: "***** Monitor Workflow Status *****"
-      uses: ./.github/actions/workflow-monitor
     # use this for builds triggered from the UI on protected branches
     - name: Checkout Latest (using COMMIT_TOKEN)
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.commit_resources == 'true'

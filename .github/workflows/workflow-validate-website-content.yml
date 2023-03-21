@@ -22,12 +22,12 @@ jobs:
   schedule-validate-website-links:
     runs-on: ubuntu-20.04
     steps:
-    - name: "***** Monitor Workflow Status *****"
-      uses: ./.github/actions/workflow-monitor
     - name: Checkout Latest
       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       with:
         fetch-depth: 0 # this ensures that the tag and commit history are available
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Checkout git ref of published website content
       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       with:

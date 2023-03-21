@@ -33,8 +33,6 @@ jobs:
       JAVA_CLASSPATH: ${{ github.workspace}}/lib
       NODE_ENV: production
     steps:
-    - name: "***** Monitor Workflow Status *****"
-      uses: ./.github/actions/workflow-monitor
     # use this for builds triggered from the UI on protected branches
     - name: Checkout Latest (using COMMIT_TOKEN)
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.commit_resources == 'true'
@@ -60,6 +58,8 @@ jobs:
       with:
         path: ${{ env.CHECKOUT_PATH }}
         submodules: recursive
+    - name: "***** Monitor Workflow Status *****"
+      uses: ./.github/actions/workflow-monitor
     - name: Set env
       run: |
         echo "SAXON_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
