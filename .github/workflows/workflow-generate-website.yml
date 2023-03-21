@@ -71,7 +71,7 @@ jobs:
     - name: "Check action locations."
       run: find ./ -name action.yaml
     - name: "***** Monitor Workflow Status *****"
-      uses: ./branch/.github/actions/workflow-monitor
+      uses: ./.github/actions/workflow-monitor
     - name: Set env
       run: |
         echo "SAXON_HOME=${JAVA_CLASSPATH}" >> $GITHUB_ENV
