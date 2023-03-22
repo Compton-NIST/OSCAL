@@ -1,6 +1,6 @@
 name: Generate CI Documentation
 env:
-  WORKFLOW_CHANGES_DETECTED = git diff --quiet HEAD -- .github/workflows
+  WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
 on:
   # Remove before PR
   push:
