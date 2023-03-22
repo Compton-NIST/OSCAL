@@ -54,7 +54,7 @@ jobs:
           commit_message: Auto publishing updated CI documentation and diagrams.
   create_pr:
     needs: update_ci_documentation
-    if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
+    # if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
     steps:
       - name: Check out the repository
