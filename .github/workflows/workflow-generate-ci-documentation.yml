@@ -37,7 +37,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
-        if: ${{ env.WORKFLOW_CHANGES_DETECTED != '' }}
         uses: Compton-NIST/Inspector@v1.2
         with:
           artifact_name: docs_ci
