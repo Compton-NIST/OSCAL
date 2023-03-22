@@ -34,7 +34,7 @@ jobs:
   update_ci_documentation:
     env:
       WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
-    if: ${{ env.WORKFLOW_CHANGES_DETECTED }}
+    if: ${{ WORKFLOW_CHANGES_DETECTED }}
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
@@ -60,7 +60,7 @@ jobs:
   create_pr:
     env:
       WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
-    if: ${{ env.WORKFLOW_CHANGES_DETECTED }}
+    if: ${{ WORKFLOW_CHANGES_DETECTED }}
     needs: update_ci_documentation
     #if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
