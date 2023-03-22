@@ -1,4 +1,6 @@
 name: Generate CI Documentation
+env:
+  WORKFLOW_CHANGES_DETECTED = git diff --quiet HEAD -- .github/workflows
 on:
   # Remove before PR
   push:
@@ -30,6 +32,7 @@ on:
         type: boolean
 jobs:
   update_ci_documentation:
+    if: ${{ env.WORKFLOW_CHANGES_DETECTED }} 
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
@@ -53,6 +56,7 @@ jobs:
           commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
           commit_message: Auto publishing updated CI documentation and diagrams.
   create_pr:
+    if: ${{ env.WORKFLOW_CHANGES_DETECTED }} 
     needs: update_ci_documentation
     #if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
@@ -61,6 +65,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Create Pull Request with Updates
         run: |
-          gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body 'Automated update from workflow-generate-ci-documentation workflow.'
+          gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body "Automated update from workflow-generate-ci-documentation workflow.\n\nWorkflow file changes:\n\n${{ env.WORKFLOW_CHANGES_DETECTED }}"
         env:
           GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
