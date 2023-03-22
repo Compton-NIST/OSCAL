@@ -30,11 +30,10 @@ on:
         default: false
         type: boolean
 
-env:
-  WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
-  
 jobs:
   update_ci_documentation:
+    env:
+      WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
     if: ${{ env.WORKFLOW_CHANGES_DETECTED }}
     runs-on: ubuntu-20.04
     steps:
@@ -59,6 +58,8 @@ jobs:
           commit_author: OSCAL GitHub Actions Bot <oscal@nist.gov>
           commit_message: Auto publishing updated CI documentation and diagrams.
   create_pr:
+    env:
+      WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
     if: ${{ env.WORKFLOW_CHANGES_DETECTED }}
     needs: update_ci_documentation
     #if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
