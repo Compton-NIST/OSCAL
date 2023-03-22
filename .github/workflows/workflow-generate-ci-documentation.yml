@@ -34,10 +34,10 @@ jobs:
   update_ci_documentation:
     env:
       WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
-    if: ${{ env.WORKFLOW_CHANGES_DETECTED != '' }}
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
+        if: ${{ env.WORKFLOW_CHANGES_DETECTED != '' }}
         uses: Compton-NIST/Inspector@v1.2
         with:
           artifact_name: docs_ci
