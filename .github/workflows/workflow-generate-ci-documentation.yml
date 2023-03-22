@@ -32,10 +32,11 @@ on:
 
 jobs:
   update_ci_documentation:
-    env:
-      WORKFLOW_CHANGES_DETECTED: git diff --quiet HEAD -- .github/workflows
     runs-on: ubuntu-20.04
     steps:
+      - name: Check for CI workflow changes
+        run: |
+          echo "WORKFLOW_CHANGES_DETECTED=$(git diff HEAD main -- ./github/workflows)" >> $GITHUB_ENV
       - name: Generate CI Documentation
         if: ${{ env.WORKFLOW_CHANGES_DETECTED != '' }}
         uses: Compton-NIST/Inspector@v1.2
@@ -59,16 +60,17 @@ jobs:
           commit_message: Auto publishing updated CI documentation and diagrams.
   create_pr:
     needs: update_ci_documentation
-    env:
-      WORKFLOW_CHANGES_DETECTED: git diff --quiet HEAD -- .github/workflows
     #if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
     steps:
+      - name: Check for CI workflow changes
+        run: |
+          echo "WORKFLOW_CHANGES_DETECTED=$(git diff HEAD main -- ./github/workflows)" >> $GITHUB_ENV
       - name: Check out the repository
         uses: actions/checkout@v3
       - name: Create Pull Request with Updates
         run: |
-          echo -e "Automated update from workflow-generate-ci-documentation workflow.\n\nWorkflow file changes:\n\n${WORKFLOW_CHANGES_DETECTED}" > committer_message
+          echo -e "Automated update from workflow-generate-ci-documentation workflow.\n\nWorkflow file changes:\n\n${GITHUB_ENV['WORKFLOW_CHANGES_DETECTED']}" > committer_message
           committer_message=$(cat committer_message) ; rm -f committer_message ; gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body "${committer_message}"
         env:
           GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
