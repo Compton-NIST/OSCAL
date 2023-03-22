@@ -34,6 +34,8 @@ jobs:
   update_ci_documentation:
     runs-on: ubuntu-20.04
     steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
       - name: Check for CI workflow changes
         run: |
           echo "WORKFLOW_CHANGES_DETECTED=$(git diff HEAD main -- ./github/workflows)" >> $GITHUB_ENV
@@ -63,11 +65,11 @@ jobs:
     #if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
     steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
       - name: Check for CI workflow changes
         run: |
           echo "WORKFLOW_CHANGES_DETECTED=$(git diff HEAD main -- ./github/workflows)" >> $GITHUB_ENV
-      - name: Check out the repository
-        uses: actions/checkout@v3
       - name: Create Pull Request with Updates
         run: |
           echo -e "Automated update from workflow-generate-ci-documentation workflow.\n\nWorkflow file changes:\n\n${GITHUB_ENV['WORKFLOW_CHANGES_DETECTED']}" > committer_message
