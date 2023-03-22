@@ -1,9 +1,9 @@
 name: Generate CI Documentation
 on:
   # Remove before PR
-  # push:
-  #   branches:
-  #     - "issue-*"
+  push:
+    branches:
+      - "issue-*"
   # Remove before PR
   workflow_call:
     inputs:
@@ -33,20 +33,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Generate CI Documentation
-        uses: Compton-NIST/Inspector@v1
+        uses: Compton-NIST/Inspector@e5536334e7ad3a8e01f6586196da6a33bef9fec8
         with:
-          artifact_name: _docs
-          output_path: _docs
+          artifact_name: docs_ci
+          output_path: docs_ci
           file_prefix: OSCAL
-      - name: Make the workflow markdown file a README.md for the directory.
-        run: |
-          cp _docs/OSCAL.workflows.md _docs/README.md
-          rm -f _docs/OSCAL.workflows.md
+          markdown_name: README.md
       - name: Commit Documentation Result (Documents and Diagrams)
         if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
-          # repository: ${{ env.CHECKOUT_PATH }}
           create_branch: true
           branch: auto-ci-docs-update
           file_pattern: '*.svg *.md'
@@ -61,17 +57,10 @@ jobs:
     if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: auto-ci-docs-update
+      - name: Check out the repository
+        uses: actions/checkout@v3
       - name: Create Pull Request with Updates
-        uses: devops-infra/action-pull-request@v0.5.5
-        with:
-          github_token: ${{ secrets.COMMIT_TOKEN }}
-          source_branch: auto-ci-docs-update
-          target_branch: main
-          title: Update CI Documentation and Diagrams
-          body: "**Automated pull request**"
-          draft: true
-          get_diff: true
-          # ignore_users: "dependabot"
+        run: |
+          gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body 'Automated update from workflow-generate-ci-documentation workflow.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
