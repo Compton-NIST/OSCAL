@@ -65,8 +65,6 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
       - name: Create Pull Request with Updates
-        run: |
-          echo -e "Automated update from workflow-generate-ci-documentation workflow, due to workflow file changes." > committer_message
-          committer_message=$(cat committer_message) ; rm -f committer_message ; gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body "${committer_message}"
+        run: gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body "Automated update from workflow-generate-ci-documentation workflow, due to workflow file changes."
         env:
           GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
