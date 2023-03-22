@@ -6,11 +6,11 @@ on:
     # branches:
     #   - "issue-*"
     paths:
-      - .github/workflows
+      - .github/workflows/**
   # Remove before PR
   workflow_call:
     paths:
-      - .github/workflows
+      - .github/workflows/**
     inputs:
       commit_resources:
         description: 'Commit the resources after generating them. (Requires the access_token to be passed)'
@@ -23,7 +23,7 @@ on:
         required: false
   workflow_dispatch:
     paths:
-      - .github/workflows
+      - .github/workflows/**
     branches:
     - main
     - develop
