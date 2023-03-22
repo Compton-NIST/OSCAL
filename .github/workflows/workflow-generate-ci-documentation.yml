@@ -1,8 +1,5 @@
 name: Generate CI Documentation
 
-env:
-  WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
-
 on:
   # Remove before PR
   push:
@@ -35,7 +32,8 @@ on:
 
 jobs:
   update_ci_documentation:
-
+    env:
+      WORKFLOW_CHANGES_DETECTED: "git diff --quiet HEAD -- .github/workflows"
     if: ${{ env.WORKFLOW_CHANGES_DETECTED != '' }}
     runs-on: ubuntu-20.04
     steps:
