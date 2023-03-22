@@ -3,10 +3,14 @@ name: Generate CI Documentation
 on:
   # Remove before PR
   push:
-    branches:
-      - "issue-*"
+    # branches:
+    #   - "issue-*"
+    paths:
+      - .github/workflows
   # Remove before PR
   workflow_call:
+    paths:
+      - .github/workflows
     inputs:
       commit_resources:
         description: 'Commit the resources after generating them. (Requires the access_token to be passed)'
@@ -18,6 +22,8 @@ on:
         description: 'The access token to use for commits.'
         required: false
   workflow_dispatch:
+    paths:
+      - .github/workflows
     branches:
     - main
     - develop
@@ -34,11 +40,6 @@ jobs:
   update_ci_documentation:
     runs-on: ubuntu-20.04
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-      - name: Check for CI workflow changes
-        run: |
-          echo "WORKFLOW_CHANGES_DETECTED=$(git diff HEAD main -- ./github/workflows)" >> $GITHUB_ENV
       - name: Generate CI Documentation
         if: ${{ env.WORKFLOW_CHANGES_DETECTED != '' }}
         uses: Compton-NIST/Inspector@v1.2
@@ -67,12 +68,9 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
-      - name: Check for CI workflow changes
-        run: |
-          echo "WORKFLOW_CHANGES_DETECTED=$(git diff HEAD main -- ./github/workflows)" >> $GITHUB_ENV
       - name: Create Pull Request with Updates
         run: |
-          echo -e "Automated update from workflow-generate-ci-documentation workflow.\n\nWorkflow file changes:\n\n${GITHUB_ENV['WORKFLOW_CHANGES_DETECTED']}" > committer_message
+          echo -e "Automated update from workflow-generate-ci-documentation workflow, due to workflow file changes." > committer_message
           committer_message=$(cat committer_message) ; rm -f committer_message ; gh pr create -B main -H auto-ci-docs-update --title 'Update CI Documentation and Diagrams' --body "${committer_message}"
         env:
           GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
