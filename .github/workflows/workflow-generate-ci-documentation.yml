@@ -10,7 +10,7 @@ on:
       commit_resources:
         description: 'Commit the resources after generating them. (Requires the access_token to be passed)'
         required: false
-        default: false
+        default: true
         type: boolean
     secrets:
       access_token:
@@ -54,7 +54,7 @@ jobs:
           commit_message: Auto publishing updated CI documentation and diagrams.
   create_pr:
     needs: update_ci_documentation
-    # if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
+    if: github.event.inputs.commit_resources == 'true' || inputs.commit_resources == true
     runs-on: ubuntu-20.04
     steps:
       - name: Check out the repository
