@@ -9,8 +9,6 @@ on:
       - .github/workflows/**
   # Remove before PR
   workflow_call:
-    paths:
-      - .github/workflows/**
     inputs:
       commit_resources:
         description: 'Commit the resources after generating them. (Requires the access_token to be passed)'
@@ -22,8 +20,6 @@ on:
         description: 'The access token to use for commits.'
         required: false
   workflow_dispatch:
-    paths:
-      - .github/workflows/**
     branches:
     - main
     - develop
